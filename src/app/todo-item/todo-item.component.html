@@ -1,3 +1,24 @@
-<p>
-  todo-item works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          #newTodo
+          (keyup.enter)="addTodo(newTodo)"
+          type="text"
+          class="form-control m-2"
+        />
+      </div>
+      <ul class="list-group m-2">
+        <li
+          *ngFor="let todo of todos"
+          class="list-group-item"
+          (click)="removeItem(todo)"
+        >
+          <span class="badge badge-info m-1">{{ todo.id }}</span>
+          {{ todo.description }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
