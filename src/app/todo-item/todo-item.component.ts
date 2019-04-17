@@ -12,17 +12,17 @@ export class TodoItemComponent implements OnInit {
     { id: 2, description: "Angular Animations" },
     { id: 3, description: "Angular Observables" }
   ];
+  private lastId: number;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.lastId = this.todos.length + 1;
+  }
 
   addTodo(input: HTMLInputElement) {
-    let size = this.todos.length;
-    console.log("Size : ", size);
-    let nextId = this.todos[size - 1].id;
-    console.log("Next Id : ", nextId);
-    this.todos.push({ id: nextId + 1, description: input.value });
+    this.todos.push({ id: this.lastId, description: input.value });
     input.value = "";
+    this.lastId++;
   }
 
   removeItem(todo) {
