@@ -1,10 +1,28 @@
+import { customAnimations } from "./../animations/animations";
 import { Component, OnInit } from "@angular/core";
 import { Todo } from "../model/Todo";
+import {
+  trigger,
+  transition,
+  useAnimation,
+  style,
+  animate
+} from "@angular/animations";
 
 @Component({
   selector: "todo-item",
   templateUrl: "./todo-item.component.html",
-  styleUrls: ["./todo-item.component.css"]
+  styleUrls: ["./todo-item.component.css"],
+  animations: [
+    trigger("todoAnimation", [
+      transition(":enter", [style({ opacity: 0 }), animate(1000)]),
+      transition(":leave", [
+        animate(400),
+        style({ backgroundColor: "indianred" }),
+        useAnimation(customAnimations.bounceToLeftAnimation)
+      ])
+    ])
+  ]
 })
 export class TodoItemComponent implements OnInit {
   public todos: Todo[] = [
@@ -20,7 +38,7 @@ export class TodoItemComponent implements OnInit {
   }
 
   addTodo(input: HTMLInputElement) {
-    this.todos.push({ id: this.lastId, description: input.value });
+    this.todos.unshift({ id: this.lastId, description: input.value });
     input.value = "";
     this.lastId++;
   }

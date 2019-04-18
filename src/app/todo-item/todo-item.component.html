@@ -1,6 +1,9 @@
-<div class="container">
-  <div class="row">
+<div class="container p-5">
+  <div class="row m-5">
     <div class="col-md-6">
+      <div>
+        <p class="display-4 m-2">Todos</p>
+      </div>
       <div class="input-group">
         <input
           #newTodo
@@ -9,16 +12,19 @@
           class="form-control m-2"
         />
       </div>
-      <ul class="list-group m-2 shadow rounded">
-        <li
-          *ngFor="let todo of todos"
-          class="list-group-item"
-          (click)="removeItem(todo)"
-        >
-          <span class="badge badge-info m-1">{{ todo.id }}</span>
-          {{ todo.description }}
-        </li>
-      </ul>
+      <div *ngIf="todos">
+        <ul class="list-group m-2 rounded">
+          <li
+            @todoAnimation
+            *ngFor="let todo of todos"
+            class="list-group-item"
+            (click)="removeItem(todo)"
+          >
+            <span class="badge badge-info m-1">{{ todo.id }}</span>
+            {{ todo.description }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
