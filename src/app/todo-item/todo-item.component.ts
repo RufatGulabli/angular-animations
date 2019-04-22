@@ -9,7 +9,8 @@ import {
   animate,
   query,
   animateChild,
-  group
+  group,
+  stagger
 } from "@angular/animations";
 
 @Component({
@@ -23,14 +24,19 @@ import {
           // to run multiple animations in paralel
           query(
             "p",
-            [style({ transform: "translateY(-100%)" }), animate(1000)],
+            [style({ transform: "translateY(-100%)" }), animate(500)],
             {
               optional: true
             }
           ),
-          query("@fade", animateChild(), {
-            optional: true
-          })
+          query(
+            "@fade", // @fade is the sudo selector, it can be replaced with CSS selectors (in this case ul or li)
+            // animateChild(),
+            stagger(500, animateChild()), // stagger function must be inside query only and it's for curtain effect animation
+            {
+              optional: true
+            }
+          )
         ])
       ])
     ]),
