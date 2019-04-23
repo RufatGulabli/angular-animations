@@ -1,46 +1,16 @@
 import { customAnimations } from "./../animations/animations";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Todo } from "../model/Todo";
-import {
-  trigger,
-  transition,
-  useAnimation,
-  style,
-  animate,
-  query,
-  animateChild,
-  group,
-  stagger
-} from "@angular/animations";
+import { expandCollapse, removeBounce } from "./todo.animations";
 
 @Component({
   selector: "todo-item",
   templateUrl: "./todo-item.component.html",
   styleUrls: ["./todo-item.component.css"],
   animations: [
-    trigger("bounce", [
-      transition(":enter", [
-        group([
-          // to run multiple animations in paralel
-          query(
-            "p",
-            [style({ transform: "translateY(-100%)" }), animate(500)],
-            {
-              optional: true
-            }
-          ),
-          query(
-            "@fade", // @fade is the sudo selector, it can be replaced with CSS selectors (in this case ul or li)
-            // animateChild(),
-            stagger(500, animateChild()), // stagger function must be inside query only and it's for curtain effect animation
-            {
-              optional: true
-            }
-          )
-        ])
-      ])
-    ]),
-    customAnimations.fade
+    customAnimations.fade,
+    expandCollapse,
+    removeBounce
     // trigger("todoAnimation", [
     //   transition(":enter", [style({ opacity: 0 }), animate(1000)]),
     //   transition(":leave", [
@@ -52,6 +22,8 @@ import {
   ]
 })
 export class TodoItemComponent implements OnInit {
+  @Input("basliq") title: string;
+  showHide: boolean = false;
   public todos: Todo[] = [
     { id: 1, description: "Angular Routings" },
     { id: 2, description: "Angular Animations" },
@@ -81,5 +53,9 @@ export class TodoItemComponent implements OnInit {
 
   animationDone($event) {
     console.log($event);
+  }
+
+  onClick() {
+    this.showHide = !this.showHide;
   }
 }
